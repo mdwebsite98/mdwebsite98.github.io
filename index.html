@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/js/script.js' | relative_url }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 <body>
     <header class="fashion-header">
@@ -31,5 +33,24 @@
 
     <section class="hero-banner">
         </section>
+
+ <section class="hero-split">
+  <div class="swiper swiper-left">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="LINK_ANH_TRAI_1" alt="Fashion 1"></div>
+      <div class="swiper-slide"><img src="LINK_ANH_TRAI_2" alt="Fashion 2"></div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+  
+  <div class="swiper swiper-right">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="LINK_ANH_PHAI_1" alt="Fashion 3"></div>
+      <div class="swiper-slide"><img src="LINK_ANH_PHAI_2" alt="Fashion 4"></div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+    
 </body>
 </html>
