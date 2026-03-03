@@ -44,17 +44,21 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 document.addEventListener('DOMContentLoaded', function() {
-  // Khởi tạo chung cho tất cả swiper sản phẩm
   const productSwipers = new Swiper('.product-swiper', {
-    slidesPerView: 3,      // Hiển thị tối đa 3 sản phẩm
-    spaceBetween: 20,     // Khoảng cách giữa các sản phẩm
-    grabCursor: true,     // Hiện bàn tay kéo thả
-    freeMode: true,       // Kéo tự do mượt mà
+    slidesPerView: 1,      // Mặc định cho điện thoại là 1 cái to rõ
+    spaceBetween: 10,
+    grabCursor: true,
     breakpoints: {
-      // Responsive: Điện thoại hiện 1.5 sản phẩm để người dùng biết là có thể vuốt
-      320: { slidesPerView: 1.2, spaceBetween: 10 },
-      768: { slidesPerView: 2.5, spaceBetween: 15 },
-      1024: { slidesPerView: 3, spaceBetween: 20 }
+      // Khi màn hình từ 768px trở lên (máy tính bảng/laptop nhỏ)
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 30
+      },
+      // Khi màn hình từ 1024px trở lên (máy tính)
+      1024: {
+        slidesPerView: 3,  // Giữ đúng 3 sản phẩm như bro yêu cầu
+        spaceBetween: 40   // Khoảng cách giữa các ảnh rộng rãi hơn
+      }
     }
   });
 });
