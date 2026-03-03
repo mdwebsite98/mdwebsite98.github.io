@@ -46,13 +46,13 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
   const productSwipers = new Swiper('.product-swiper', {
     slidesPerView: 1,      // Mặc định cho điện thoại là 1 cái to rõ
-    spaceBetween: 10,
+    spaceBetween: 0,
     grabCursor: true,
     breakpoints: {
       // Khi màn hình từ 768px trở lên (máy tính bảng/laptop nhỏ)
       768: {
         slidesPerView: 2,
-        spaceBetween: 30
+        spaceBetween: 20
       },
       // Khi màn hình từ 1024px trở lên (máy tính)
       1024: {
