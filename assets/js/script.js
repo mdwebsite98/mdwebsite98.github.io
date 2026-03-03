@@ -43,3 +43,18 @@ document.addEventListener('DOMContentLoaded', function() {
     grabCursor: true,
   });
 });
+document.addEventListener('DOMContentLoaded', function() {
+  // Khởi tạo chung cho tất cả swiper sản phẩm
+  const productSwipers = new Swiper('.product-swiper', {
+    slidesPerView: 3,      // Hiển thị tối đa 3 sản phẩm
+    spaceBetween: 20,     // Khoảng cách giữa các sản phẩm
+    grabCursor: true,     // Hiện bàn tay kéo thả
+    freeMode: true,       // Kéo tự do mượt mà
+    breakpoints: {
+      // Responsive: Điện thoại hiện 1.5 sản phẩm để người dùng biết là có thể vuốt
+      320: { slidesPerView: 1.2, spaceBetween: 10 },
+      768: { slidesPerView: 2.5, spaceBetween: 15 },
+      1024: { slidesPerView: 3, spaceBetween: 20 }
+    }
+  });
+});
