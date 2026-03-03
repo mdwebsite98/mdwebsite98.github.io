@@ -139,66 +139,82 @@ body {
     height: 500px;
   }
 }
+/* 1. Ép toàn bộ Section tràn lề 100% không giới hạn */
 .product-section {
-    width: 100vw; /* Chiều rộng bằng 100% chiều rộng màn hình thiết bị */
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    padding: 60px 0; /* Xóa padding 2 bên để ảnh sát mép */
+    width: 100%;
+    max-width: 100vw;
+    padding: 80px 0;
     overflow: hidden;
+    background: #fff;
 }
 
+/* 2. Đưa tiêu đề Váy Thời Trang ra chính giữa */
 .section-title {
-    margin-left: 20px;
-    font-size: 24px;
-    letter-spacing: 2px;
-    margin-bottom: 40px;
+    text-align: center;
+    font-size: 32px; /* Tăng cỡ chữ cho oai */
+    font-weight: 700;
+    letter-spacing: 5px;
+    margin-bottom: 60px;
+    text-transform: uppercase;
+    position: relative;
+    width: 100%;
 }
 
+/* 3. Ép Swiper phải rộng bằng màn hình, không được bóp vào giữa */
+.product-swiper {
+    width: 100% !important;
+    padding: 0 20px !important; /* Tạo khoảng trống cực nhỏ ở 2 mép màn hình cho sang */
+}
+
+/* 4. Định dạng Card sản phẩm to và dài */
 .product-card {
     width: 100%;
 }
 
 .product-img {
     width: 100%;
-    /* Tỷ lệ 1 : 1.5 (Rộng 1 dài 1.5) - Cực kỳ dài và to */
-    aspect-ratio: 1 / 1.5; 
+    /* Tỷ lệ cực dài (Rộng 1 cao 1.6) để ảnh chiếm nhiều diện tích dọc */
+    aspect-ratio: 1 / 1.6; 
     overflow: hidden;
-    background: #f0f0f0;
+    border-radius: 0; /* Bỏ bo góc để ảnh trông to và tràn lề hơn */
+    background: #f8f8f8;
 }
-/* Hiệu ứng zoom nhẹ khi di chuột cho sang */
-.product-card:hover img {
-    transform: scale(1.05);
-}
+
 .product-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Đảm bảo ảnh luôn lấp đầy khung kể cả khi ảnh gốc bị ngắn */
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
+/* 5. Thông tin sản phẩm dưới ảnh */
 .product-info {
-    padding: 20px 4%; /* Chữ căn theo lề của tiêu đề */
+    padding: 25px 0;
+    text-align: center; /* Căn giữa thông tin cho đồng bộ với tiêu đề */
 }
 
 .p-name {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 500;
-    margin-bottom: 8px;
-    color: #333;
+    margin-bottom: 10px;
+    text-transform: uppercase;
 }
 
 .p-price {
-    font-size: 18px;
+    font-size: 20px;
     color: #ff85a2;
     font-weight: 700;
 }
 
 .p-details {
-    margin-top: 5px;
-    font-size: 13px;
-    color: #999;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #888;
+}
+
+/* Hiệu ứng khi lướt qua */
+.product-card:hover img {
+    transform: scale(1.08);
 }
 .category-nav {
   background: #fff;
