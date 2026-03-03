@@ -58,3 +58,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const cateBtn = document.getElementById('cateBtn');
+    const cateContent = document.getElementById('cateContent');
+
+    // Click vào chữ Danh Mục để toggle
+    cateBtn.addEventListener('click', function(e) {
+        e.stopPropagation(); // Ngăn sự kiện nổi bọt
+        cateBtn.classList.toggle('active');
+        cateContent.classList.toggle('show');
+    });
+
+    // Click ra ngoài thì ẩn danh mục
+    document.addEventListener('click', function(e) {
+        if (!cateContent.contains(e.target) && !cateBtn.contains(e.target)) {
+            cateBtn.classList.remove('active');
+            cateContent.classList.remove('show');
+        }
+    });
+});
