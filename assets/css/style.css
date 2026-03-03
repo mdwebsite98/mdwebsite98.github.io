@@ -140,63 +140,59 @@ body {
   }
 }
 .product-section {
-  padding: 60px 5%;
-  background: #fff;
+    padding: 60px 2%; /* Giảm lề 2 bên xuống để ảnh có thêm không gian giãn ra */
+    max-width: 100%;  /* Ép section dàn tràn màn hình */
+    overflow: hidden;
 }
 
 .section-title {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  margin-bottom: 30px;
-  text-transform: uppercase;
-  border-left: 4px solid #ff85a2; /* Điểm nhấn màu hồng trẻ trung */
-  padding-left: 15px;
+    margin-left: 20px;
+    font-size: 24px;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
 }
 
 .product-card {
-  transition: transform 0.3s ease;
-  width: 100%; /* Đảm bảo card chiếm hết không gian slide */
+    width: 100%;
 }
 
 .product-img {
-  width: 100%;
-  /* Chỉnh tỷ lệ 1/1 (vuông) hoặc 4/3 nếu muốn ảnh to ngang hơn 
-     Thay vì 3/4 (ảnh dọc chuyên nghiệp) như cũ */
-  aspect-ratio: 1 / 1; 
-  overflow: hidden;
-  border-radius: 12px; /* Tăng bo góc một chút cho hợp với cỡ to */
-  background: #f9f9f9;
+    width: 100%;
+    /* Tỷ lệ 2:3 là tỷ lệ vàng để ảnh dài và sang trọng */
+    aspect-ratio: 2 / 3; 
+    border-radius: 4px;
+    overflow: hidden;
+    background: #f5f5f5;
 }
 
 .product-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh luôn lấp đầy khung kể cả khi ảnh gốc bị ngắn */
 }
 
 .product-info {
-  padding: 20px 10px; /* Tăng padding cho cân xứng với cỡ to */
-  text-align: center; /* Căn giữa thông tin cho sang */
+    padding: 20px 0;
+    text-align: left;
 }
 
 .p-name {
-  font-weight: 600;
-  font-size: 18px; /* Tăng size chữ tên sản phẩm */
-  margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
 }
 
 .p-price {
-  color: #ff85a2;
-  font-weight: 700;
-  font-size: 20px; /* Tăng size chữ giá tiền */
-  margin-bottom: 10px;
+    font-size: 18px;
+    color: #ff85a2;
+    font-weight: 700;
 }
 
 .p-details {
-  font-size: 13px; /* Tăng nhẹ cỡ chữ chi tiết */
-  color: #888;
-  letter-spacing: 0.5px;
+    margin-top: 5px;
+    font-size: 13px;
+    color: #999;
 }
 .category-nav {
   background: #fff;
