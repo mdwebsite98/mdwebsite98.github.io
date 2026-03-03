@@ -81,103 +81,112 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-let cart = [];
+document.addEventListener('DOMContentLoaded', function() {
+    let cart = [];
 
-// Hàm mở/đóng giỏ hàng
-const cartBtn = document.getElementById('cartBtn');
-const cartDrawer = document.getElementById('cartDrawer');
-const cartOverlay = document.getElementById('cartOverlay');
+    // Lấy các thành phần giao diện
+    const cartBtn = document.getElementById('cartBtn');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const closeCartBtn = document.getElementById('closeCart');
 
-if (cartBtn) {
-    cartBtn.addEventListener('click', function(e) {
-        // Chặn tuyệt đối việc nhảy trang hoặc cuộn lên đầu trang
-        e.preventDefault(); 
-        e.stopPropagation(); 
+    // 1. Mở giỏ hàng khi ấn icon
+    if (cartBtn) {
+        cartBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (cartDrawer && cartOverlay) {
+                cartDrawer.classList.add('open');
+                cartOverlay.classList.add('show');
+            }
+        });
+    }
+
+    // 2. Đóng giỏ hàng khi click ra ngoài hoặc ấn nút X
+    function closeCart() {
+        if (cartDrawer && cartOverlay) {
+            cartDrawer.classList.remove('open');
+            cartOverlay.classList.remove('show');
+        }
+    }
+
+    if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
+    if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
+
+    // 3. Hàm thêm vào giỏ hàng (Gắn vào window để gọi từ HTML)
+    window.addToCart = function(name, price, color, size, img) {
+        // Xử lý giá tiền từ chuỗi sang số
+        const numericPrice = parseInt(price.replace(/\./g, '').replace('đ', ''));
         
-        // Mở giỏ hàng
-        cartDrawer.classList.add('open');
-        cartOverlay.classList.add('show');
-    });
-}
+        const existingItem = cart.find(item => item.name === name && item.color === color && item.size === size);
 
-// Logic đóng giỏ hàng khi click ra ngoài (Overlay)
-if (cartOverlay) {
-    cartOverlay.addEventListener('click', function() {
-        cartDrawer.classList.remove('open');
-        cartOverlay.classList.remove('show');
-    });
-}
-function closeCart() {
-    cartDrawer.classList.remove('open');
-    cartOverlay.classList.remove('show');
-}
-
-// Hàm thêm vào giỏ (Đã bỏ lệnh mở bảng tự động)
-function addToCart(name, price, color, size, img) {
-    const numericPrice = parseInt(price.replace(/\./g, '').replace('đ', ''));
-    const existingItem = cart.find(item => item.name === name && item.color === color && item.size === size);
-
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({ name, price: numericPrice, color, size, img, quantity: 1 });
-    }
-    
-    updateCartUI();
-    // Chỗ này không còn lệnh add class 'open' nữa, chỉ nhảy số ở icon thôi bro nhé
-}
-
-function changeQuantity(index, delta) {
-    cart[index].quantity += delta;
-    if (cart[index].quantity <= 0) {
-        removeItem(index);
-    } else {
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({ name, price: numericPrice, color, size, img, quantity: 1 });
+        }
+        
         updateCartUI();
-    }
-}
+        // Chỉ nhảy số ở icon, không mở bảng theo ý bro
+    };
 
-function removeItem(index) {
-    cart.splice(index, 1);
-    updateCartUI();
-}
+    // 4. Tăng giảm số lượng và Xóa
+    window.changeQuantity = function(index, delta) {
+        cart[index].quantity += delta;
+        if (cart[index].quantity <= 0) {
+            window.removeItem(index);
+        } else {
+            updateCartUI();
+        }
+    };
 
-function updateCartUI() {
-    const cartItemsList = document.getElementById('cartItemsList');
-    const cartCount = document.querySelectorAll('.cart-count');
-    const totalPriceEl = document.getElementById('cartTotalPrice');
-    
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartCount.forEach(el => el.innerText = totalItems);
-    
-    // Header Count trong Drawer nếu có
-    const headerCount = document.getElementById('cartCountHeader');
-    if(headerCount) headerCount.innerText = totalItems;
+    window.removeItem = function(index) {
+        cart.splice(index, 1);
+        updateCartUI();
+    };
 
-    let totalMoney = 0;
+    // 5. Cập nhật giao diện
+    function updateCartUI() {
+        const cartItemsList = document.getElementById('cartItemsList');
+        const cartCountElements = document.querySelectorAll('.cart-count');
+        const totalPriceEl = document.getElementById('cartTotalPrice');
+        const headerCount = document.getElementById('cartCountHeader');
 
-    if (cart.length === 0) {
-        cartItemsList.innerHTML = '<p style="text-align:center; padding: 50px 20px; color: #999;">Giỏ hàng của bạn đang trống.</p>';
-    } else {
-        cartItemsList.innerHTML = cart.map((item, index) => {
-            totalMoney += item.price * item.quantity;
-            return `
-                <div class="cart-item">
-                    <img src="${item.img}">
-                    <div class="cart-item-info">
-                        <h4>${item.name}</h4>
-                        <p>${item.color} / ${item.size}</p>
-                        <div class="cart-quantity-controls">
-                            <button onclick="changeQuantity(${index}, -1)">-</button>
-                            <span>${item.quantity}</span>
-                            <button onclick="changeQuantity(${index}, 1)">+</button>
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        
+        // Cập nhật tất cả các icon có class .cart-count
+        cartCountElements.forEach(el => el.innerText = totalItems);
+        if (headerCount) headerCount.innerText = totalItems;
+
+        let totalMoney = 0;
+
+        if (cart.length === 0) {
+            cartItemsList.innerHTML = '<p style="text-align:center; padding: 50px 20px; color: #999;">Giỏ hàng trống.</p>';
+        } else {
+            cartItemsList.innerHTML = cart.map((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                totalMoney += itemTotal;
+                return `
+                    <div class="cart-item">
+                        <img src="${item.img}" alt="${item.name}">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p>${item.color} / ${item.size}</p>
+                            <div class="cart-quantity-controls">
+                                <button onclick="changeQuantity(${index}, -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="changeQuantity(${index}, 1)">+</button>
+                            </div>
+                            <div class="cart-item-price">${itemTotal.toLocaleString('vi-VN')}đ</div>
                         </div>
-                        <div class="cart-item-price">${(item.price * item.quantity).toLocaleString('vi-VN')}đ</div>
+                        <button class="remove-item" onclick="removeItem(${index})">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
                     </div>
-                    <button class="remove-item" onclick="removeItem(${index})"><i class="far fa-trash-alt"></i></button>
-                </div>
-            `;
-        }).join('');
+                `;
+            }).join('');
+        }
+        
+        if (totalPriceEl) totalPriceEl.innerText = totalMoney.toLocaleString('vi-VN') + 'đ';
     }
-    
-    totalPriceEl.innerText = totalMoney.toLocaleString('vi-VN') + 'đ';
-}
+});
