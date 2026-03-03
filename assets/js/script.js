@@ -81,3 +81,54 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+let cart = [];
+
+// Hàm mở/đóng giỏ hàng
+const cartDrawer = document.getElementById('cartDrawer');
+const cartOverlay = document.getElementById('cartOverlay');
+const cartIcon = document.querySelector('.cart-icon');
+
+cartIcon.onclick = (e) => {
+    e.preventDefault();
+    cartDrawer.classList.add('open');
+    cartOverlay.classList.add('show');
+}
+
+document.getElementById('closeCart').onclick = () => {
+    cartDrawer.classList.remove('open');
+    cartOverlay.classList.remove('show');
+}
+
+// Hàm thêm vào giỏ
+function addToCart(name, price, color, size, img) {
+    cart.push({ name, price, color, size, img });
+    updateCartUI();
+    // Tự động mở giỏ hàng khi thêm thành công
+    cartDrawer.classList.add('open');
+    cartOverlay.classList.add('show');
+}
+
+function updateCartUI() {
+    const cartCount = document.querySelectorAll('.cart-count');
+    const cartItemsList = document.getElementById('cartItemsList');
+    
+    // Cập nhật số lượng trên icon
+    cartCount.forEach(el => el.innerText = cart.length);
+    document.getElementById('cartCountHeader').innerText = cart.length;
+
+    // Đổ dữ liệu vào bảng
+    if (cart.length === 0) {
+        cartItemsList.innerHTML = '<p class="empty-msg">Giỏ hàng trống.</p>';
+    } else {
+        cartItemsList.innerHTML = cart.map((item, index) => `
+            <div class="cart-item">
+                <img src="${item.img}">
+                <div class="cart-item-info">
+                    <h4>${item.name}</h4>
+                    <p>Màu: ${item.color} | Size: ${item.size}</p>
+                    <div class="cart-item-price">${item.price}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+}
