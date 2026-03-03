@@ -156,13 +156,16 @@ body {
 
 .product-card {
   transition: transform 0.3s ease;
+  width: 100%; /* Đảm bảo card chiếm hết không gian slide */
 }
 
 .product-img {
   width: 100%;
-  aspect-ratio: 3/4; /* Tỷ lệ ảnh thời trang chuẩn */
+  /* Chỉnh tỷ lệ 1/1 (vuông) hoặc 4/3 nếu muốn ảnh to ngang hơn 
+     Thay vì 3/4 (ảnh dọc chuyên nghiệp) như cũ */
+  aspect-ratio: 1 / 1; 
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 12px; /* Tăng bo góc một chút cho hợp với cỡ to */
   background: #f9f9f9;
 }
 
@@ -173,31 +176,27 @@ body {
 }
 
 .product-info {
-  padding: 15px 5px;
+  padding: 20px 10px; /* Tăng padding cho cân xứng với cỡ to */
+  text-align: center; /* Căn giữa thông tin cho sang */
 }
 
 .p-name {
   font-weight: 600;
-  font-size: 14px;
-  margin-bottom: 5px;
+  font-size: 18px; /* Tăng size chữ tên sản phẩm */
+  margin-bottom: 8px;
 }
 
 .p-price {
   color: #ff85a2;
   font-weight: 700;
-  font-size: 16px;
-  margin-bottom: 8px;
+  font-size: 20px; /* Tăng size chữ giá tiền */
+  margin-bottom: 10px;
 }
 
 .p-details {
-  font-size: 11px;
+  font-size: 13px; /* Tăng nhẹ cỡ chữ chi tiết */
   color: #888;
   letter-spacing: 0.5px;
-}
-
-/* Hiệu ứng khi lướt qua */
-.product-card:hover {
-  transform: translateY(-5px);
 }
 .category-nav {
   background: #fff;
