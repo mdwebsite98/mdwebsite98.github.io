@@ -139,3 +139,63 @@ body {
     height: 500px;
   }
 }
+.product-section {
+  padding: 60px 5%;
+  background: #fff;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  border-left: 4px solid #ff85a2; /* Điểm nhấn màu hồng trẻ trung */
+  padding-left: 15px;
+}
+
+.product-card {
+  transition: transform 0.3s ease;
+}
+
+.product-img {
+  width: 100%;
+  aspect-ratio: 3/4; /* Tỷ lệ ảnh thời trang chuẩn */
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 15px 5px;
+}
+
+.p-name {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.p-price {
+  color: #ff85a2;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.p-details {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 0.5px;
+}
+
+/* Hiệu ứng khi lướt qua */
+.product-card:hover {
+  transform: translateY(-5px);
+}
