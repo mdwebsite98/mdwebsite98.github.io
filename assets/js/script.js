@@ -83,52 +83,77 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 let cart = [];
 
-// Hàm mở/đóng giỏ hàng
-const cartDrawer = document.getElementById('cartDrawer');
-const cartOverlay = document.getElementById('cartOverlay');
-const cartIcon = document.querySelector('.cart-icon');
-
-cartIcon.onclick = (e) => {
-    e.preventDefault();
-    cartDrawer.classList.add('open');
-    cartOverlay.classList.add('show');
-}
-
-document.getElementById('closeCart').onclick = () => {
-    cartDrawer.classList.remove('open');
-    cartOverlay.classList.remove('show');
-}
-
-// Hàm thêm vào giỏ
+// Cập nhật hàm AddToCart để xử lý số lượng
 function addToCart(name, price, color, size, img) {
-    cart.push({ name, price, color, size, img });
+    // Chuyển giá tiền từ chuỗi "380.000đ" thành số 380000 để tính toán
+    const numericPrice = parseInt(price.replace(/\./g, '').replace('đ', ''));
+    
+    // Kiểm tra xem sản phẩm cùng màu, cùng size đã có trong giỏ chưa
+    const existingItem = cart.find(item => item.name === name && item.color === color && item.size === size);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ name, price: numericPrice, color, size, img, quantity: 1 });
+    }
+    
     updateCartUI();
-    // Tự động mở giỏ hàng khi thêm thành công
-    cartDrawer.classList.add('open');
-    cartOverlay.classList.add('show');
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('show');
 }
 
-function updateCartUI() {
-    const cartCount = document.querySelectorAll('.cart-count');
-    const cartItemsList = document.getElementById('cartItemsList');
-    
-    // Cập nhật số lượng trên icon
-    cartCount.forEach(el => el.innerText = cart.length);
-    document.getElementById('cartCountHeader').innerText = cart.length;
-
-    // Đổ dữ liệu vào bảng
-    if (cart.length === 0) {
-        cartItemsList.innerHTML = '<p class="empty-msg">Giỏ hàng trống.</p>';
+// Hàm thay đổi số lượng (tăng/giảm)
+function changeQuantity(index, delta) {
+    cart[index].quantity += delta;
+    if (cart[index].quantity <= 0) {
+        removeItem(index);
     } else {
-        cartItemsList.innerHTML = cart.map((item, index) => `
-            <div class="cart-item">
-                <img src="${item.img}">
-                <div class="cart-item-info">
-                    <h4>${item.name}</h4>
-                    <p>Màu: ${item.color} | Size: ${item.size}</p>
-                    <div class="cart-item-price">${item.price}</div>
-                </div>
-            </div>
-        `).join('');
+        updateCartUI();
     }
+}
+
+// Hàm xóa sản phẩm
+function removeItem(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+}
+
+// Hàm cập nhật giao diện giỏ hàng
+function updateCartUI() {
+    const cartItemsList = document.getElementById('cartItemsList');
+    const cartCount = document.querySelectorAll('.cart-count');
+    const totalPriceEl = document.getElementById('cartTotalPrice');
+    
+    // Cập nhật số lượng icon (tổng các item)
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.forEach(el => el.innerText = totalItems);
+    document.getElementById('cartCountHeader').innerText = totalItems;
+
+    let totalMoney = 0;
+
+    if (cart.length === 0) {
+        cartItemsList.innerHTML = '<p class="empty-msg" style="text-align:center; padding: 20px;">Giỏ hàng trống.</p>';
+    } else {
+        cartItemsList.innerHTML = cart.map((item, index) => {
+            totalMoney += item.price * item.quantity;
+            return `
+                <div class="cart-item">
+                    <img src="${item.img}">
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.color} / ${item.size}</p>
+                        <div class="cart-quantity-controls">
+                            <button onclick="changeQuantity(${index}, -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="changeQuantity(${index}, 1)">+</button>
+                        </div>
+                        <div class="cart-item-price">${(item.price * item.quantity).toLocaleString('vi-VN')}đ</div>
+                    </div>
+                    <button class="remove-item" onclick="removeItem(${index})"><i class="far fa-trash-alt"></i></button>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    totalPriceEl.innerText = totalMoney.toLocaleString('vi-VN') + 'đ';
 }
