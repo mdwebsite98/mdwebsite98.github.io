@@ -199,3 +199,75 @@ body {
 .product-card:hover {
   transform: translateY(-5px);
 }
+.category-nav {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+  position: relative;
+  z-index: 99; /* Nằm dưới header nhưng trên slide */
+  margin-top: 90px; /* Cách header một khoảng */
+}
+
+.category-container {
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.category-toggle {
+  background: none;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Nội dung danh mục */
+.category-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+}
+
+.category-content.show {
+  max-height: 500px; /* Độ cao tối đa khi mở */
+  opacity: 1;
+  padding-top: 30px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Chia 4 cột như ảnh bạn gửi */
+  gap: 30px;
+  padding-bottom: 30px;
+}
+
+.cate-col a {
+  display: block;
+  font-size: 13px;
+  color: #333;
+  text-decoration: none;
+  margin-bottom: 12px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.cate-col a:hover {
+  color: #ff85a2;
+  padding-left: 5px;
+}
+
+/* Xoay icon mũi tên khi mở */
+.category-toggle i {
+  transition: 0.3s;
+}
+.category-toggle.active i {
+  transform: rotate(180deg);
+}
