@@ -84,27 +84,29 @@ document.addEventListener('DOMContentLoaded', function() {
 let cart = [];
 
 // Hàm mở/đóng giỏ hàng
+const cartBtn = document.getElementById('cartBtn');
 const cartDrawer = document.getElementById('cartDrawer');
 const cartOverlay = document.getElementById('cartOverlay');
-const cartIcon = document.querySelector('.cart-icon');
 
-// Chỉ mở bảng khi ấn vào icon giỏ hàng
-cartIcon.onclick = (e) => {
-    e.preventDefault();
-    cartDrawer.classList.add('open');
-    cartOverlay.classList.add('show');
+if (cartBtn) {
+    cartBtn.addEventListener('click', function(e) {
+        // Chặn tuyệt đối việc nhảy trang hoặc cuộn lên đầu trang
+        e.preventDefault(); 
+        e.stopPropagation(); 
+        
+        // Mở giỏ hàng
+        cartDrawer.classList.add('open');
+        cartOverlay.classList.add('show');
+    });
 }
 
-// Đóng khi ấn nút X
-document.getElementById('closeCart').onclick = () => {
-    closeCart();
+// Logic đóng giỏ hàng khi click ra ngoài (Overlay)
+if (cartOverlay) {
+    cartOverlay.addEventListener('click', function() {
+        cartDrawer.classList.remove('open');
+        cartOverlay.classList.remove('show');
+    });
 }
-
-// Đóng khi click ra vùng ngoài (Overlay)
-cartOverlay.onclick = () => {
-    closeCart();
-}
-
 function closeCart() {
     cartDrawer.classList.remove('open');
     cartOverlay.classList.remove('show');
