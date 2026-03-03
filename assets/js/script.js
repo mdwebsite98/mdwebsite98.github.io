@@ -83,12 +83,36 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 let cart = [];
 
-// Cập nhật hàm AddToCart để xử lý số lượng
+// Hàm mở/đóng giỏ hàng
+const cartDrawer = document.getElementById('cartDrawer');
+const cartOverlay = document.getElementById('cartOverlay');
+const cartIcon = document.querySelector('.cart-icon');
+
+// Chỉ mở bảng khi ấn vào icon giỏ hàng
+cartIcon.onclick = (e) => {
+    e.preventDefault();
+    cartDrawer.classList.add('open');
+    cartOverlay.classList.add('show');
+}
+
+// Đóng khi ấn nút X
+document.getElementById('closeCart').onclick = () => {
+    closeCart();
+}
+
+// Đóng khi click ra vùng ngoài (Overlay)
+cartOverlay.onclick = () => {
+    closeCart();
+}
+
+function closeCart() {
+    cartDrawer.classList.remove('open');
+    cartOverlay.classList.remove('show');
+}
+
+// Hàm thêm vào giỏ (Đã bỏ lệnh mở bảng tự động)
 function addToCart(name, price, color, size, img) {
-    // Chuyển giá tiền từ chuỗi "380.000đ" thành số 380000 để tính toán
     const numericPrice = parseInt(price.replace(/\./g, '').replace('đ', ''));
-    
-    // Kiểm tra xem sản phẩm cùng màu, cùng size đã có trong giỏ chưa
     const existingItem = cart.find(item => item.name === name && item.color === color && item.size === size);
 
     if (existingItem) {
@@ -98,11 +122,9 @@ function addToCart(name, price, color, size, img) {
     }
     
     updateCartUI();
-    document.getElementById('cartDrawer').classList.add('open');
-    document.getElementById('cartOverlay').classList.add('show');
+    // Chỗ này không còn lệnh add class 'open' nữa, chỉ nhảy số ở icon thôi bro nhé
 }
 
-// Hàm thay đổi số lượng (tăng/giảm)
 function changeQuantity(index, delta) {
     cart[index].quantity += delta;
     if (cart[index].quantity <= 0) {
@@ -112,27 +134,27 @@ function changeQuantity(index, delta) {
     }
 }
 
-// Hàm xóa sản phẩm
 function removeItem(index) {
     cart.splice(index, 1);
     updateCartUI();
 }
 
-// Hàm cập nhật giao diện giỏ hàng
 function updateCartUI() {
     const cartItemsList = document.getElementById('cartItemsList');
     const cartCount = document.querySelectorAll('.cart-count');
     const totalPriceEl = document.getElementById('cartTotalPrice');
     
-    // Cập nhật số lượng icon (tổng các item)
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     cartCount.forEach(el => el.innerText = totalItems);
-    document.getElementById('cartCountHeader').innerText = totalItems;
+    
+    // Header Count trong Drawer nếu có
+    const headerCount = document.getElementById('cartCountHeader');
+    if(headerCount) headerCount.innerText = totalItems;
 
     let totalMoney = 0;
 
     if (cart.length === 0) {
-        cartItemsList.innerHTML = '<p class="empty-msg" style="text-align:center; padding: 20px;">Giỏ hàng trống.</p>';
+        cartItemsList.innerHTML = '<p style="text-align:center; padding: 50px 20px; color: #999;">Giỏ hàng của bạn đang trống.</p>';
     } else {
         cartItemsList.innerHTML = cart.map((item, index) => {
             totalMoney += item.price * item.quantity;
