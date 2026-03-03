@@ -32,7 +32,26 @@
 </div>
         </div>
     </header>
+<div class="cart-overlay" id="cartOverlay"></div>
 
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3>GIỎ HÀNG (<span id="cartCountHeader">0</span>)</h3>
+        <button class="close-cart" id="closeCart">&times;</button>
+    </div>
+    
+    <div class="cart-items" id="cartItemsList">
+        <p style="text-align:center; padding: 50px 20px; color: #999;">Giỏ hàng của bạn đang trống.</p>
+    </div>
+
+    <div class="cart-footer">
+        <div class="total-price">
+            <span>TỔNG CỘNG:</span>
+            <span id="cartTotalPrice">0đ</span>
+        </div>
+        <button class="checkout-btn" onclick="window.location.href='/cart-page'">ĐI ĐẾN GIỎ HÀNG</button>
+    </div>
+</div>
     <section class="hero-split">
         <div class="swiper swiper-left">
             <div class="swiper-wrapper">
@@ -318,23 +337,6 @@
     </div>
     <div class="swiper-pagination"></div>
   </div>
-</section>
-<div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-        <h3>GIỎ HÀNG (<span id="cartCountHeader">0</span>)</h3>
-        <button class="close-cart" id="closeCart">&times;</button>
-    </div>
-    <div class="cart-items" id="cartItemsList">
-        <p class="empty-msg">Giỏ hàng của bạn đang trống.</p>
-    </div>
-    <div class="cart-footer">
-    <div class="total-price">
-        <span>TỔNG CỘNG:</span>
-        <span id="cartTotalPrice">0đ</span>
-    </div>
-    <button class="checkout-btn" onclick="window.location.href='/cart-page'">ĐI ĐẾN GIỎ HÀNG</button>
-</div>
-</div>
-<div class="cart-overlay" id="cartOverlay"></div>    
+</section> 
 </body>
 </html>
